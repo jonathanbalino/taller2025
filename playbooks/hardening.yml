@@ -1,0 +1,17 @@
+---
+  - name: Update ubuntu 
+    hosts: ubuntu
+    become: yes
+    tasks:
+      - name: System updated
+        ansible.builtin.apt:
+          name: "*"
+          state: latest
+          update_cache: true
+        notify: Reboot server
+
+    handlers:
+        - name: Reboot server
+          ansible.builtin.reboot:
+
+
