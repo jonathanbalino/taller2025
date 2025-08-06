@@ -6,11 +6,11 @@
   tasks:
   - name: Httpd installed
     ansible.builtin.dnf:
-      name: httpd
+      name: "{{ package }}"
       state: present
   - name: Httpd enabled
     ansible.builtin.systemd_service:
-      name: httpd
+      name: "{{ service }}"
       enabled: true
       state: started
   - name: Firewalld enable
@@ -19,9 +19,7 @@
       state: enabled
       permanent: true
       immediate: true
-    loop: 
-      - http
-      - https
+    loop: "{{ firewall_service }}" 
   - name: Archivo index custom
     ansible.builtin.template:
       src: ../templates/index.j2
