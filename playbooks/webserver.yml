@@ -19,6 +19,14 @@
       state: enabled
       permanent: true
       immediate: true
-      loop: 
-        - http
-        - https
+    loop: 
+      - http
+      - https
+  - name: Archivo index custom
+    ansible.builtin.template:
+      src: ../templates/index.j2
+      dest: /var/www/html/index.html
+      owner: apache
+      group: apache
+      mode: u=rw,g=r,o=r
+
