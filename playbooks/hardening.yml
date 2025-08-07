@@ -16,6 +16,21 @@
           insertafter: '^#PermitRootLogin'
           line: "PermitRootLogin no"
         notify: Reboot ssh
+      
+      - name: exist directory /opt/test
+        ansible.builtin.file:
+          path: /opt/test
+          state: directory
+          owner: nobody
+          group: nogroup
+          mode: '0777'
+        register: result
+      
+      - name: debug task exist directory
+        ansible.builtin.debug:
+          msg: "{{ result.diff.after }}"
+        when: result.changed
+      
 
     handlers:
         - name: Reboot server

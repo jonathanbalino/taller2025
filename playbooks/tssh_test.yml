@@ -1,0 +1,19 @@
+---
+  - name: testall
+    hosts: all
+    become: yes
+    tasks:
+      - name: verify ssh centos
+        ansible.builtin.systemd_service:
+         name: sshd 
+         state: started
+         enabled: true
+        when: ansible_os_family == "RedHat"
+
+      - name: verify ssh ubuntu
+        ansible.builtin.systemd_service:
+         name: ssh
+         state: started
+         enabled: true
+        when: ansible_os_family == "Debian"
+    
