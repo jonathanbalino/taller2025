@@ -1,0 +1,28 @@
+---
+  - name: users
+    hosts: ubuntu
+    become: yes
+    tasks:
+      - name: group enterprise present
+        ansible.builtin.group:
+          name: enterprise
+          state: present
+
+      - name: users present
+        ansible.builtin.user:
+          name: "{{ item }}"
+          group: enterprise
+        loop: 
+          - data
+          - picand
+          - crusher.md
+          - troy
+        
+      - name: create directory enterprise
+        ansible.builtin.file:
+          path: /var/enterprise
+          state: directory
+          owner: picand
+          group: enterprise
+          mode: o=rwx,g=rws
+    
